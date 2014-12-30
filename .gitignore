@@ -7,7 +7,13 @@
 /pkg/
 /spec/reports/
 /tmp/
-/public/images/*.*
+/public/images/*.jpg
+/public/images/*.jpeg
+/public/images/*.JPG
+/public/images/*.JPEG
+/public/images/*.png
+/public/images/*.PNG
+/public/images/*.gif
 *.bundle
 *.so
 *.o

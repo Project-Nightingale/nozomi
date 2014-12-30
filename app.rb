@@ -23,7 +23,7 @@ post '/upload' do
       f.write params[:file][:tempfile].read
       @mes = "アップロード成功 " + save_path
 
-      send_object_strage(save_path)
+      @file_url = send_object_strage(save_path)
     end
   else
     @mes = "アップロード失敗"
@@ -51,8 +51,11 @@ def send_object_strage(src_path)
 
   status = rabbit_swift_client.upload(token, dest_path, src_path)
   if (status == RabbitSwift::Client::UPLOAD_SUCCESS_HTTP_STATUS_CODE)
-
+     //TODO ファイル削除
   else
 
   end
+
+  filename = "";
+  @object_strage + "/" + filename;
 end
