@@ -1,0 +1,9 @@
+{
+  "object_strage" : {
+    "use": true
+  },
+  "file_check" : {
+    "max_size" : 10,
+    "ext" : ["jpg","png","gif"]
+  }
+}

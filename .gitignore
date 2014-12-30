@@ -14,3 +14,5 @@
 *.a
 mkmf.log
 .idea/
+/config/app.json
+/config/object_strage.json
