@@ -74,7 +74,8 @@ def send_object_strage(src_path)
   dest_path = File.join(@swift["endPoint"], @object_strage["container"])
   status = rabbit_swift_client.upload(token, dest_path, new_file_path)
   if (status == RabbitSwift::Client::UPLOAD_SUCCESS_HTTP_STATUS_CODE)
-    #TODO ファイル削除
+    #ファイル削除
+    File.unlink(new_file_path)
   else
 
   end
