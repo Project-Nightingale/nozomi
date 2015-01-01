@@ -18,5 +18,7 @@ bundle exec unicorn -c unicorn.rb
 ### 本番
 
 ```
-bundle exec unicorn -c unicorn.rb  -D -E
+bundle exec unicorn -c unicorn.rb  -D -E production -p 80
 ```
+-D デーモン化
+-E production
