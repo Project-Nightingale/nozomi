@@ -1,6 +1,6 @@
 {
     "swift" : {
-        "auth_url" : "",　//必須
+        "auth_url" : "", //必須
         "tenantName" : "", //必須
         "username" : "", //必須
         "password" : "", //必須

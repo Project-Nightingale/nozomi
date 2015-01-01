@@ -9,9 +9,14 @@ memcached サーバー = オブジェクトストレージの鍵を格納する�
 
 ## 起動
 
-bundle exec ruby app.rb　-p 80 -e production
+### 開発
 
-## 開発
+```
+bundle exec unicorn -c unicorn.rb
+```
 
-bundle exec rerun ruby app.rb
+### 本番
 
+```
+bundle exec unicorn -c unicorn.rb  -D -E
+```
