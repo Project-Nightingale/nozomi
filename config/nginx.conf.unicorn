@@ -1,0 +1,22 @@
+worker_processes  2;
+
+include /usr/local/etc/nginx/conf.d/*.conf;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    upstream unicornapp {
+        server unix:/tmp/unicorn.sock;
+    }
+
+    server {
+        listen       80;
+        server_name  _;
+
+        location / {
+            proxy_pass http://unicornapp;
+        }
+    }
+}
