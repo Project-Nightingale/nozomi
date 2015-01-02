@@ -27,6 +27,9 @@ post '/upload' do
       f.write params[:file][:tempfile].read
       @mes = "アップロード成功"
 
+      #TODO ファイルサイズ制限（nginxでやる
+      #TODO ファイル・タイプチェック
+
       @file_url = send_object_strage(save_path)
     end
   else
