@@ -28,12 +28,13 @@ post '/upload' do
       f.write params[:file][:tempfile].read
       @mes = "アップロード成功"
 
-      input_desc = params[:input_desc]
+      p params[:input_desc]
+      input_desc = sanitizing(params[:input_desc])
 
       # ファイルサイズ制限（nginxでやる
       # ファイル・タイプチェック&イメージフィルタ
       begin
-        image_filter(save_path, params[:write_string], input_desc, params[:del_exif] == 'true' ? true : false)
+        image_filter(save_path, params[:write_string], input_desc, params[:del_exif].to_s == 'true' ? true : false)
         @file_url = send_object_strage(save_path)
       rescue => ex
         p ex
@@ -111,4 +112,11 @@ def get_rand_filename
   # 7文字
   # 3,521,614,606,208 パターン (3兆)
   (0...7).map{ character_pattern[rand(62)] }.join
+end
+
+#暫定でRMagickでエラーが出そうな文字を全角に変換する
+def sanitizing(input_desc)
+  trans = input_desc
+  trans = trans.gsub('@', '＠')
+  trans.gsub('$', '＄')
 end
