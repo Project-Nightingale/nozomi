@@ -7,13 +7,22 @@
     %link(rel='stylesheet' href='/css/cover.css')
     %link(rel='shortcut icon' href='/img/favicon.ico')
   %body
-
+    %hr
+    %p Nozomi Uploader
+    %hr
     %div.container{:align => "center"}
       %h1 画像を選択してください
       %form{:action => "./upload", :method => "post", :enctype => "multipart/form-data"}
         %input{:type => "file", :name => "file"}
         %br
         %br
+        %select{:name => "write_text"}
+          %option{:value => "",} 画像注釈なし
+          %option{:value => "affiBlog",} アフィブログ転載禁止
+        %br
+        %select{ :name => "exif"}
+          %option{:value => "no_strip",} Exif情報を消す
+          %option{:value => "strip",} Exif情報を消さない
         %br
         %button{:type => "submit", :name => "submit", :css => "btn btn-default btn-lg"}
           %span.glyphicon.icon-upload
@@ -21,3 +30,7 @@
 
 
       %p アップロードできるファイル: 10Mまでの画像ファイル(jpg, png, gif)
+
+      %p Nozomi Uploaderはオープンソースソフトウェアです。
+      %p どなたでも自前のホスティングサーバ等に入れて改造して利用できます。
+      %a{ :href => "https://github.com/Project-Nightingale/nozomi" } Github
