@@ -3,6 +3,7 @@ require 'haml'
 require 'json'
 require 'rabbit_swift'
 require 'fileutils'
+require './lib/image_string_write.rb'
 
 # 静的コンテンツ参照のためのパス設定
 set :public, File.dirname(__FILE__) + '/public'
@@ -27,8 +28,10 @@ post '/upload' do
       f.write params[:file][:tempfile].read
       @mes = "アップロード成功"
 
-      #TODO ファイルサイズ制限（nginxでやる
-      #TODO ファイル・タイプチェック
+      # ファイルサイズ制限（nginxでやる
+
+      #TODO ファイル・タイプチェック&イメージフィルタ
+      image_filter(save_path, params[:write_string], params[:del_exif] == 'true' ? true : false)
 
       @file_url = send_object_strage(save_path)
     end
@@ -36,6 +39,10 @@ post '/upload' do
     @mes = "アップロード失敗"
   end
   haml :upload
+end
+
+def image_filter(src_path, write_string, del_exif)
+  ImageStringWrite.new(src_path, write_string, del_exif).write()
 end
 
 
@@ -68,7 +75,6 @@ def send_object_strage(src_path)
   File.rename(src_path, new_file_path)
 
   # TODO IP回数制限などのエラーが出た場合通知がくるのでハンドリングする
-
 
   rabbit_swift_client = RabbitSwift::Client.new(@swift);
 
