@@ -29,12 +29,18 @@ post '/upload' do
       @mes = "アップロード成功"
 
       # ファイルサイズ制限（nginxでやる
-
-      #TODO ファイル・タイプチェック&イメージフィルタ
-      image_filter(save_path, params[:write_string], params[:del_exif] == 'true' ? true : false)
-
-      @file_url = send_object_strage(save_path)
+      #ファイル・タイプチェック&イメージフィルタ
+      begin
+        image_filter(save_path, params[:write_string], params[:del_exif] == 'true' ? true : false)
+        @file_url = send_object_strage(save_path)
+      rescue => ex
+        p ex
+        @mes = "アップロード後にエラーが発生しました。ファイル形式が誤っている可能性があります。"
+        File.unlink(save_path)
+      end
     end
+
+
   else
     @mes = "アップロード失敗"
   end

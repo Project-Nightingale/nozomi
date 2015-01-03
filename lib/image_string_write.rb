@@ -37,6 +37,11 @@ class ImageStringWrite
       raise Exception
     end
 
+    #処理すべきオプションがひとつもない場合returnする
+    if @del_exif == false && @write_string.empty?
+      return
+    end
+
     draw = Magick::Draw.new
     font_size = auto_font_size(img.columns)
 
@@ -44,7 +49,7 @@ class ImageStringWrite
       img.strip!
     end
 
-    if @write_string != nil
+    if !@write_string.empty?
       # 文字の影 ( 1pt 右下へずらす )
       draw.annotate(img, 0, 0, @position_x - 1, @position_y -1 , @write_string) do
         self.font      = FONT                      # フォント
