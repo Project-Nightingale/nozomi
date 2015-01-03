@@ -24,6 +24,8 @@
           %option{:value => "true",} Exif情報を消す
           %option{:value => "false",} Exif情報を消さない
         %br
+        %textarea{:name => 'input_desc', :rows => 1, :placeholder => "注釈の手動入力（最大15文字）", :maxlength => 15, :style => "resize:none;"}
+        %br
         %button{:type => "submit", :name => "submit", :css => "btn btn-default btn-lg"}
           %span.glyphicon.icon-upload
           送信

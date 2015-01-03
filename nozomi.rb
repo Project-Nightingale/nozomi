@@ -28,13 +28,16 @@ post '/upload' do
       f.write params[:file][:tempfile].read
       @mes = "アップロード成功"
 
+      input_desc = params[:input_desc]
+
       # ファイルサイズ制限（nginxでやる
-      #ファイル・タイプチェック&イメージフィルタ
+      # ファイル・タイプチェック&イメージフィルタ
       begin
-        image_filter(save_path, params[:write_string], params[:del_exif] == 'true' ? true : false)
+        image_filter(save_path, params[:write_string], input_desc, params[:del_exif] == 'true' ? true : false)
         @file_url = send_object_strage(save_path)
       rescue => ex
         p ex
+        p ex.backtrace
         @mes = "アップロード後にエラーが発生しました。ファイル形式が誤っている可能性があります。"
         File.unlink(save_path)
       end
@@ -47,8 +50,8 @@ post '/upload' do
   haml :upload
 end
 
-def image_filter(src_path, write_string, del_exif)
-  ImageStringWrite.new(src_path, write_string, del_exif).write()
+def image_filter(src_path, write_string, input_desc, del_exif)
+  ImageStringWrite.new(src_path, write_string, input_desc, del_exif).write()
 end
 
 

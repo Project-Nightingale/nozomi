@@ -4,13 +4,14 @@ class ImageStringWrite
 
   FONT = RUBY_PLATFORM.downcase == 'x86_64-linux' ? "./freefont/NotoSansCJKjp-Medium.otf" : "/Library/Fonts/Osaka.ttf"
 
-  def initialize(filename, write_string = nil,  del_exif = false, font_size = 16, position_x = 5, position_y = 5)
+  def initialize(filename, write_string = nil, input_desc = nil, del_exif = false, font_size = 16, position_x = 5, position_y = 5)
     @position_x = position_x
     @position_y = position_y
     @img_file = filename
     @write_string = write_string
     @font_size = font_size
     @del_exif = del_exif
+    @input_desc = input_desc
   end
 
   # 横幅に応じて自動的にフォントサイズをきめる
@@ -62,6 +63,32 @@ class ImageStringWrite
         self.stroke    = 'transparent'             # フォント縁取り色(透過)
         self.pointsize = font_size                         # フォントサイズ
         self.gravity   = Magick::NorthWestGravity  # 描画基準位置
+      end
+    end
+
+    if !@input_desc.empty?
+
+      draw = Magick::Draw.new
+      font_size = auto_font_size(img.columns)
+
+      p @input_desc
+
+      # 文字の影
+      draw.annotate(img, 0, 0, @position_x - 1, @position_y -1 , @input_desc) do
+        self.font      = FONT                      # フォント
+        self.fill      = 'black'                   # フォント塗りつぶし色(黒)
+        self.stroke    = 'transparent'             # フォント縁取り色(透過)
+        self.pointsize =  font_size                      # フォントサイズ
+        self.gravity   = Magick::CenterGravity  # 描画基準位置
+      end
+
+      # 文字
+      draw.annotate(img, 0, 0, @position_x, @position_y, @input_desc) do
+        self.font      = FONT                      # フォント
+        self.fill      = 'red'                   # フォント塗りつぶし色(白)
+        self.stroke    = 'transparent'             # フォント縁取り色(透過)
+        self.pointsize = font_size                         # フォントサイズ
+        self.gravity   = Magick::CenterGravity  # 描画基準位置
       end
     end
 
