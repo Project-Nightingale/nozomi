@@ -55,6 +55,10 @@ bundle exec unicorn -c unicorn.rb -D -E production
 kill -HUP `cat /tmp/unicorn.pid`
 ```
 
+### 動作環境
+
+Linux or OSX
+
 ### ライセンス
 
 MIT License

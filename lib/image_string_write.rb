@@ -37,16 +37,11 @@ class ImageStringWrite
       raise Exception
     end
 
-    #処理すべきオプションがひとつもない場合returnする
-    if @del_exif == false && @write_string.empty?
-      return
-    end
-
+    # 文字を書き込む前に縦横情報を元に画像を回転する
+    # 何も処理しない場合でも画像を回転しておく
+    img.auto_orient!
 
     if !@write_string.empty?
-
-      # 文字を書き込む前に縦横情報を元に画像を回転する
-      img.auto_orient!
 
       draw = Magick::Draw.new
       font_size = auto_font_size(img.columns)
