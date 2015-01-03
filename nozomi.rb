@@ -73,7 +73,7 @@ def send_object_strage(src_path)
 
 
   # TODO ファイルのリネーム処理ブロック開始
-  # TODO Masterサーバーに問い合わせ+クライアントIPなどの情報を送信 (REST API [POST JSON])
+  # TODO Masterサーバーにファイル名問い合わせ+クライアントIPなどの情報を送信 (REST API [POST JSON])
   # TODO Masterサーバー側で情報のDB登録
   # TODO 戻ってきた名前でファイルリネーム
   new_file_name = get_rand_filename + File.extname(src_path)

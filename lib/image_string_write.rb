@@ -45,11 +45,12 @@ class ImageStringWrite
     draw = Magick::Draw.new
     font_size = auto_font_size(img.columns)
 
-    if img.format == 'JPEG' && @del_exif
-      img.strip!
-    end
-
     if !@write_string.empty?
+
+      # TODO
+      # 文字を書き込む前に縦横情報を元に画像を回転する
+      img.auto_orient!
+
       # 文字の影 ( 1pt 右下へずらす )
       draw.annotate(img, 0, 0, @position_x - 1, @position_y -1 , @write_string) do
         self.font      = FONT                      # フォント
@@ -67,6 +68,14 @@ class ImageStringWrite
         self.pointsize = font_size                         # フォントサイズ
         self.gravity   = Magick::NorthWestGravity  # 描画基準位置
       end
+
+    end
+
+
+
+    # Exif情報を削除
+    if img.format == 'JPEG' && @del_exif
+      img.strip!
     end
 
     # 画像生成
