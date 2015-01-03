@@ -1,11 +1,28 @@
+#Nozomi - 希
+
+## 概要
+
+画像アップローダーです。
+
+アップロードされた画像はサーバー側で保存せずクラウド・ストレージに送信します。
+
+画像のレスポンスはクラウド・ストレージ(AWS S3など)に任せるためAPサーバーの負荷を軽減できます。
+
+クライアントから見た仕様はimgur.comをインスパイアしています。
+
 ## 設定
-cp config/sample.app.conf.json config/app.conf.json
+サンプルファイルをコピーし適切な設定値に変更します
+
+* cp config/sample.app.json config/app.json
+* cp config/sample.object_strage.json config/object_strage.json
 
 ## 起動に必要なもの
 
-(オブジェクトストレージを使用する場合)
+オブジェクトストレージサーバー接続情報 (Amazon S3, OpenStack Swift, Google CloudStrage, Azure Strage)
 
 memcached サーバー = オブジェクトストレージの鍵を格納するのに使用
+
+現状 OpenStack Swiftに対応しています。
 
 ## システム構成
 
@@ -35,3 +52,7 @@ bundle exec unicorn -c unicorn.rb -D -E production
 ```
 kill -HUP `cat /tmp/unicorn.pid`
 ```
+
+### ライセンス
+
+MIT ライセンス
