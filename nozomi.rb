@@ -17,6 +17,12 @@ get '/index.html' do
   haml :index
 end
 
+get '/mypage' do
+  old_cookie = request.cookies['upload_files'] ? request.cookies['upload_files'] : ''
+  @filename_and_deletekey = old_cookie.split('|')
+  haml :mypage
+end
+
 # アップロード処理
 post '/upload' do
   if params[:file]
@@ -36,6 +42,10 @@ post '/upload' do
       begin
         image_filter(save_path, params[:write_string], input_desc, params[:del_exif].to_s == 'true' ? true : false)
         @file_url = send_object_strage(save_path)
+
+        old_cookie = request.cookies['upload_files'] ? request.cookies['upload_files'] : ''
+        response.set_cookie "upload_files", old_cookie + '|' + @new_file_name + ':' + gen_delete_key(16)
+
       rescue => ex
         p ex
         p ex.backtrace
@@ -99,6 +109,7 @@ def send_object_strage(src_path)
 
   end
 
+  @new_file_name = new_file_name
   File.join(@object_strage['web_url'], new_file_name)
 end
 
@@ -112,6 +123,17 @@ def get_rand_filename
   # 7文字
   # 3,521,614,606,208 パターン (3兆)
   (0...7).map{ character_pattern[rand(62)] }.join
+end
+
+#ファイル削除キーを発行する
+def gen_delete_key(size)
+  big = ('A'..'Z').to_a
+  small = ('a'..'z').to_a
+  num = (0..9).to_a
+  character_pattern = big + small + num;
+  # 32文字
+  # TODO 暗号化
+  (0...size).map{ character_pattern[rand(62)] }.join
 end
 
 #暫定でRMagickでエラーが出そうな文字を全角に変換する
