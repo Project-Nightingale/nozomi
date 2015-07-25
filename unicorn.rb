@@ -3,7 +3,7 @@
 worker_processes 2 # CPUのコア数に揃える
 working_directory @dir
 
-timeout 300
+timeout 120
 
 pid "/tmp/unicorn.pid" #pidを保存するファイル
 

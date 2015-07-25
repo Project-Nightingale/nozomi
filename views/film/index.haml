@@ -1,0 +1,43 @@
+!!!html5
+%html
+  %head
+    %title Movie Film Creater
+    %link(rel='stylesheet' href='/css/bootstrap.min.css')
+    %link(rel='stylesheet' href='/css/bootstrap-responsive.min.css')
+    %link(rel='stylesheet' href='/css/cover.css')
+    %link(rel='shortcut icon' href='/img/favicon.ico')
+  %body
+    %hr
+    %p Movie Film Creater
+    %p 指定された画像を使って映画の4コマフィルムっぽい画像を生成します。
+    %hr
+    %div.container{:align => "center"}
+      %form{:action => "./upload", :method => "post", :enctype => "multipart/form-data"}
+        %p 1コマ目の画像を選択してください
+        %input{:type => "file", :name => "file1"}
+        %br
+        %p 2コマ目の画像を選択してください
+        %input{:type => "file", :name => "file2"}
+        %br
+        %p 3コマ目の画像を選択してください
+        %input{:type => "file", :name => "file3"}
+        %br
+        %p 4コマ目の画像を選択してください
+        %input{:type => "file", :name => "file4"}
+        %br
+        %br
+        %br
+        %button{:type => "submit", :name => "submit", :css => "btn btn-default btn-lg"}
+          %span.glyphicon.icon-upload
+          送信
+
+      %p 指定された画像ファイルは自動的にフィルムコマに合うようにリサイズされます。
+      %p 画像ファイルはなるべく映画コマの比率に合う横長の画像にしてください。
+      %p アップロード数が4コマ分の画像に満たない場合は最後に指定した画像ファイルで補完されます。
+      %br
+      %br
+      %p サンプル
+      %img{ :src => "http://i.imgur.com/ZhcIhAV.png"}
+      %br
+      %br
+      %a{ :href => "https://github.com/Project-Nightingale/nozomi" } GitHub: Project-Nightingale 「nozomi」
