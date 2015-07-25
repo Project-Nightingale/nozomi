@@ -16,6 +16,10 @@ get '/f/index.html' do
   haml :'film/index'
 end
 
+get '/f/sample.html' do
+  haml :'film/sample'
+end
+
 post '/f/upload' do
 
   #ファイルが最低1つはアップロードされていることを保証する
