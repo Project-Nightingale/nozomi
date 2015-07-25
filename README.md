@@ -26,6 +26,8 @@ memcached サーバー = オブジェクトストレージの鍵を格納する�
 
 現状 OpenStack Swiftに対応しています。
 
+参考：http://qiita.com/AKB428/items/8e2dd9d746d541e9336e
+
 ## システム構成
 
 Sinatra + Unicorn + Nignx での運用を想定しています。

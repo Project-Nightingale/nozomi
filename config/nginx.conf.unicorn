@@ -17,7 +17,7 @@ http {
 
         location / {
             proxy_pass http://unicornapp;
-            client_max_body_size 10M;
+            client_max_body_size 15M;
         }
     }
 }
