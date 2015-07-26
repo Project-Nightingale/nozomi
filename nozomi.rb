@@ -4,6 +4,7 @@ require 'json'
 require 'rabbit_swift'
 require 'fileutils'
 require './lib/image_string_write.rb'
+require './lib/movie_film_creater.rb'
 
 # 静的コンテンツ参照のためのパス設定
 set :public, File.dirname(__FILE__) + '/public'
@@ -60,6 +61,86 @@ post '/upload' do
   end
   haml :upload
 end
+
+
+get '/f/' do
+  haml :'film/index'
+end
+
+get '/f/index.html' do
+  haml :'film/index'
+end
+
+get '/f/sample.html' do
+  haml :'film/sample'
+end
+
+post '/f/upload' do
+
+  #ファイルが最低1つはアップロードされていることを保証する
+  if params[:file1]
+
+    image_file1 = nil
+    image_file2 = nil
+    image_file3 = nil
+    image_file4 = nil
+
+    p params[:file1][:tempfile]
+    p params[:file2]
+    p params[:file3]
+    p params[:file4]
+
+    if params[:file1] && params[:file2].nil? && params[:file3].nil? && params[:file4].nil?
+
+      image_file1 = params[:file1][:tempfile].path;
+      image_file2 = params[:file1][:tempfile].path;
+      image_file3 = params[:file1][:tempfile].path;
+      image_file4 = params[:file1][:tempfile].path;
+
+    elsif params[:file1] && params[:file2] && params[:file3].nil? && params[:file4].nil?
+
+      image_file1 = params[:file1][:tempfile].path;
+      image_file2 = params[:file2][:tempfile].path;
+      image_file3 = params[:file2][:tempfile].path;
+      image_file4 = params[:file2][:tempfile].path;
+
+    elsif params[:file1] && params[:file2] && params[:file3] && params[:file4].nil?
+      image_file1 = params[:file1][:tempfile].path;
+      image_file2 = params[:file2][:tempfile].path;
+      image_file3 = params[:file3][:tempfile].path;
+      image_file4 = params[:file3][:tempfile].path;
+
+    elsif params[:file1] && params[:file2] && params[:file3] && params[:file4]
+
+      image_file1 = params[:file1][:tempfile].path;
+      image_file2 = params[:file2][:tempfile].path;
+      image_file3 = params[:file3][:tempfile].path;
+      image_file4 = params[:file4][:tempfile].path;
+
+    end
+
+    begin
+      @mes = "アップロード成功"
+      save_path = image_filter_film(image_file1, image_file2, image_file3, image_file4)
+      @file_url = send_object_strage(save_path)
+    rescue => ex
+      p ex
+      p ex.backtrace
+      @mes = "アップロード後にエラーが発生しました。"
+      File.unlink(save_path)
+    end
+
+  else
+    @mes = "アップロード失敗"
+  end
+  haml :'film/upload'
+end
+
+def image_filter_film(img1, img2, img3, img4)
+  #セーブしたファイルパスを返す
+  MovieFilmCreater.new(img1, img2, img3, img4).write()
+end
+
 
 def image_filter(src_path, write_string, input_desc, del_exif)
   ImageStringWrite.new(src_path, write_string, input_desc, del_exif).write()
