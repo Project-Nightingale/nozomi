@@ -1,9 +1,9 @@
 require 'json'
-require './lib/image_string_write'
+require './lib/image_string_write_oxford'
 
 class AzureOxfordVision
 
-  COPYRIGHT = 'Powered by http://imgur.tokyo/ and Microsoft Azure Project Oxford Vision.'
+  COPYRIGHT = 'Powered by http://imgur.tokyo/a/ and Azure Project Oxford.'
 
   def initialize(target_file_or_url, conf)
 
@@ -40,7 +40,7 @@ class AzureOxfordVision
       position_x = left
       position_y = top + height + 1
       puts "#{position_x} #{position_y}"
-      ImageStringWrite.new(@write_filename, write_string, "", false, 16, position_x, position_y).write
+      ImageStringWriteOxford.new(@write_filename, write_string, COPYRIGHT, false, 16, position_x, position_y).write
     end
     @write_filename
   end
