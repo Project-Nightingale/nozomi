@@ -3,8 +3,6 @@ require './lib/image_string_write_oxford'
 
 class AzureOxfordVision
 
-  COPYRIGHT = 'Powered by http://imgur.tokyo/a/ and Azure Project Oxford.'
-
   def initialize(target_file_or_url, conf)
 
     uri = URI('https://api.projectoxford.ai/vision/v1/analyses')
@@ -40,9 +38,13 @@ class AzureOxfordVision
       position_x = left
       position_y = top + height + 1
       puts "#{position_x} #{position_y}"
+
+      #TODO 人物が複数いたらここがループする。ファイルリードが効率が悪いので改良が必要
       ImageStringWriteOxford.new(@write_filename, write_string, "", false, 16, position_x, position_y).write
     end
-    ImageStringWriteOxford.new(@write_filename, COPYRIGHT, "", false, 16, 0, 0).write
+
+    #ここで再度コピーライトを書く
+    ImageStringWriteOxford.new(@write_filename, @conf['oxford_app']['copyright'], "", false, 16, 0, 0).write
     @write_filename
   end
 

@@ -9,7 +9,8 @@
   "azure" : {
     "subscription_key": "",
     "oxford_app" : {
-      "output_directory": "/tmp/"
+      "output_directory": "/tmp/",
+      "copyright": "Powered by http://imgur.tokyo/a/ and Azure Project Oxford."
     }
   }
 }
