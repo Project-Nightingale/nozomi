@@ -40,8 +40,9 @@ class AzureOxfordVision
       position_x = left
       position_y = top + height + 1
       puts "#{position_x} #{position_y}"
-      ImageStringWriteOxford.new(@write_filename, write_string, COPYRIGHT, false, 16, position_x, position_y).write
+      ImageStringWriteOxford.new(@write_filename, write_string, "", false, 16, position_x, position_y).write
     end
+    ImageStringWriteOxford.new(@write_filename, COPYRIGHT, "", false, 16, 0, 0).write
     @write_filename
   end
 

@@ -57,8 +57,6 @@ class ImageStringWriteOxford < ImageStringWrite
     if !@input_desc.empty?
 
       draw = Magick::Draw.new
-      font_size = auto_font_size(img.columns)
-
 
       px = 0
       py = 0
