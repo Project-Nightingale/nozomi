@@ -5,6 +5,7 @@ require 'rabbit_swift'
 require 'fileutils'
 require './lib/image_string_write.rb'
 require './lib/movie_film_creater.rb'
+require './lib/azure_oxford_vision.rb'
 
 # 静的コンテンツ参照のためのパス設定
 set :public, File.dirname(__FILE__) + '/public'
@@ -162,13 +163,13 @@ post '/a/upload' do
     save_path = "./public/images/#{params[:file][:filename]}"
 
     File.open(save_path, 'wb') do |f|
-      p params[:file][:tempfile]
+      #p params[:file][:tempfile]
       f.write params[:file][:tempfile].read
       @mes = "アップロード成功"
 
+      puts save_path
       begin
-        image_filter(save_path, params[:write_string], "", params[:del_exif].to_s == 'true' ? true : false)
-        @file_url = send_object_strage(save_path)
+        @file_url = send_object_strage(azure_oxford(save_path))
 
         old_cookie = request.cookies['upload_files'] ? request.cookies['upload_files'] : ''
         response.set_cookie "upload_files", old_cookie + '|' + @new_file_name + ':' + gen_delete_key(16)
@@ -234,6 +235,19 @@ def send_object_strage(src_path)
 
   @new_file_name = new_file_name
   File.join(@object_strage['web_url'], new_file_name)
+end
+
+
+def azure_oxford(src_path)
+  if @azure_conf.nil?
+    azure_conf_path = './config/app.json'
+    puts "LOAD " + azure_conf_path;
+    File.open azure_conf_path do |file|
+      conf = JSON.load(file.read)
+      @azure_conf = conf['azure']
+    end
+  end
+  AzureOxfordVision.new(src_path, @azure_conf).image_info_parse()
 end
 
 #TODO

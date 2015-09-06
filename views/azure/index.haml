@@ -12,7 +12,7 @@
     %hr
     %div.container{:align => "center"}
       %h1 画像を選択してください
-      %form{:action => "./a/upload", :method => "post", :enctype => "multipart/form-data"}
+      %form{:action => "./upload", :method => "post", :enctype => "multipart/form-data"}
         %input{:type => "file", :name => "file"}
         %br
         %br
@@ -21,7 +21,7 @@
           送信
 
 
-      %p アップロードできるファイル: 10Mまでの画像ファイル(jpg, png, gif)
+      %p アップロードできるファイル: 4Mまでの画像ファイル(jpg, png, gif)
 
       %p Nozomi Uploaderはオープンソースソフトウェアです。
       %p どなたでも自前のホスティングサーバ等に入れて改造して利用できます。

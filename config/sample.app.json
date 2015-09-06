@@ -5,5 +5,11 @@
   "file_check" : {
     "max_size" : 10,
     "ext" : ["jpg","png","gif"]
+  },
+  "azure" : {
+    "subscription_key": "",
+    "oxford_app" : {
+      "output_directory": "/tmp/"
+    }
   }
 }
