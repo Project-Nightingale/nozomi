@@ -1,0 +1,12 @@
+!!!html5
+%html
+  %body
+    %p= @mes
+    %a{ :href => @file_url, :title => @file_url }=@file_url
+    %br
+    URLコピー用フォーム(スマフォ向け)
+    %br
+      %input{ :type => "text", :value => @file_url, :size => "100"}
+    %br
+    %a{ :href => "/a/index.html", :title => "戻る" }  戻る
+

@@ -147,6 +147,48 @@ def image_filter(src_path, write_string, input_desc, del_exif)
 end
 
 
+get '/a/' do
+  haml :'azure/index'
+end
+
+get '/a/index.html' do
+  haml :'azure/index'
+end
+
+# アップロード処理(azure)
+post '/a/upload' do
+  if params[:file]
+
+    save_path = "./public/images/#{params[:file][:filename]}"
+
+    File.open(save_path, 'wb') do |f|
+      p params[:file][:tempfile]
+      f.write params[:file][:tempfile].read
+      @mes = "アップロード成功"
+
+      begin
+        image_filter(save_path, params[:write_string], "", params[:del_exif].to_s == 'true' ? true : false)
+        @file_url = send_object_strage(save_path)
+
+        old_cookie = request.cookies['upload_files'] ? request.cookies['upload_files'] : ''
+        response.set_cookie "upload_files", old_cookie + '|' + @new_file_name + ':' + gen_delete_key(16)
+
+      rescue => ex
+        p ex
+        p ex.backtrace
+        @mes = "アップロード後にエラーが発生しました。ファイル形式が誤っている可能性があります。"
+        File.unlink(save_path)
+      end
+    end
+
+
+  else
+    @mes = "アップロード失敗"
+  end
+  haml :upload
+end
+
+
 def send_object_strage(src_path)
   if @swift.nil?
     object_strage_conf_path = './config/object_strage.json'
