@@ -186,7 +186,7 @@ post '/a/upload' do
   else
     @mes = "アップロード失敗"
   end
-  haml :upload
+  haml :'azure/upload'
 end
 
 
@@ -216,6 +216,10 @@ def send_object_strage(src_path)
   # TODO 戻ってきた名前でファイルリネーム
   new_file_name = get_rand_filename + File.extname(src_path)
   new_file_path = File.join(File::dirname(src_path), new_file_name)
+
+  puts src_path
+  puts new_file_path
+
   File.rename(src_path, new_file_path)
 
   # TODO IP回数制限などのエラーが出た場合通知がくるのでハンドリングする
@@ -230,7 +234,7 @@ def send_object_strage(src_path)
     #ファイル削除
     File.unlink(new_file_path)
   else
-
+    puts "ERROR! " + status.to_s
   end
 
   @new_file_name = new_file_name

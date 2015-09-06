@@ -57,6 +57,16 @@ bundle exec unicorn -c unicorn.rb -D -E production
 kill -HUP `cat /tmp/unicorn.pid`
 ```
 
+### オプション
+
+#### フィルム風の画像を出力
+
+URLパス /f/
+
+#### Microsoft Azure ML の Project Oxfordを利用した年齢性別判定
+
+URLパス /a/
+
 ### 動作環境
 
 Linux or OSX
