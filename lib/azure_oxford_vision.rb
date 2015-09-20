@@ -1,9 +1,12 @@
 require 'json'
 require './lib/image_string_write_oxford'
+require 'logger'
 
 class AzureOxfordVision
 
+
   def initialize(target_file_or_url, conf)
+    @log = Logger.new("./log/nogomi_oxford.log")
 
     uri = URI('https://api.projectoxford.ai/vision/v1/analyses')
     uri.query = URI.encode_www_form({'visualFeatures' => 'All'})
@@ -40,7 +43,9 @@ class AzureOxfordVision
       puts "#{position_x} #{position_y}"
 
       #TODO 人物が複数いたらここがループする。ファイルリードが効率が悪いので改良が必要
-      ImageStringWriteOxford.new(@write_filename, write_string, "", false, 16, position_x, position_y).write
+      gps = ImageStringWriteOxford.new(@write_filename, write_string, "", false, 16, position_x, position_y).write
+
+      @log.info([@write_filename, data['age'].to_s, data['gender'].to_s, gps[0], gps[1]].join("\t"))
     end
 
     #ここで再度コピーライトを書く

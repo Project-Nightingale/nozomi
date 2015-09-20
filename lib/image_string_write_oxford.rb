@@ -80,6 +80,26 @@ class ImageStringWriteOxford < ImageStringWrite
       end
     end
 
+    @latitude = nil
+    @longitude = nil
+    # 位置情報を保存
+    # ref:http://www.iwazer.com/~iwazawa/diary/2013/03/convert-photo-location-to-digits-with-rmagick.html
+    if img.format == 'JPEG' && !img.get_exif_by_entry('GPSLatitude').nil? && !img.get_exif_by_entry('GPSLongitude').nil? &&
+        !img.get_exif_by_entry('GPSLatitude')[0][1].nil? && !img.get_exif_by_entry('GPSLongitude')[0][1].nil? then
+
+      exif_lat = img.get_exif_by_entry('GPSLatitude')[0][1].split(',').map(&:strip)
+      p img.get_exif_by_entry('GPSLatitude')
+      # => ["35/1", "3850/100", "0/1"]
+      exif_lng = img.get_exif_by_entry('GPSLongitude')[0][1].split(',').map(&:strip)
+      p img.get_exif_by_entry('GPSLongitude')
+      # => ["139/1", "4497/100", "0/1"]
+      @latitude = (Rational(exif_lat[0]) + Rational(exif_lat[1])/60 + Rational(exif_lat[2])/3600).to_f
+      # => 35.641666666666666
+      @longitude = (Rational(exif_lng[0]) + Rational(exif_lng[1])/60 + Rational(exif_lng[2])/3600).to_f
+
+      puts @latitude.to_s + "\t" + @longitude.to_s
+    end
+
     # Exif情報を削除
     if img.format == 'JPEG' && @del_exif
       img.strip!
@@ -87,6 +107,7 @@ class ImageStringWriteOxford < ImageStringWrite
 
     # 画像生成
     img.write(@img_file)
+    [@latitude.to_s, @longitude.to_s]
   end
 end
 
