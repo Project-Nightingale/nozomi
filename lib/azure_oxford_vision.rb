@@ -37,7 +37,7 @@ class AzureOxfordVision
       left = data['faceRectangle']['left']
       top = data['faceRectangle']['top']
       height = data['faceRectangle']['height']
-      write_string = sprintf('age=%d \n %s',data['age'],data['gender'])
+      write_string = sprintf('%d歳\n%s', data['age'], data['gender'] == 'Male' ?  '男性' : '女性')
       position_x = left
       position_y = top + height + 1
       puts "#{position_x} #{position_y}"
