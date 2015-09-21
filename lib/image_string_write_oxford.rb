@@ -6,16 +6,16 @@ class ImageStringWriteOxford < ImageStringWrite
   def auto_font_size(width)
     case width
       when (0..500) then 12
-      when (501..1000) then 25
-      when (1001..1500) then 50
-      when (1501..2000) then 75
-      when (2001..2500) then 100
-      when (2501..3000) then 125
-      when (3001..3500) then 150
-      when (3501..4000) then 175
-      when (4001..4500) then 200
-      when (4501..5000) then 250
-      when (5001..Float::INFINITY) then 250
+      when (501..1000) then 16
+      when (1001..1500) then 20
+      when (1501..2000) then 30
+      when (2001..2500) then 45
+      when (2501..3000) then 60
+      when (3001..3500) then 80
+      when (3501..4000) then 100
+      when (4001..4500) then 120
+      when (4501..5000) then 160
+      when (5001..Float::INFINITY) then 200
     end
   end
 
