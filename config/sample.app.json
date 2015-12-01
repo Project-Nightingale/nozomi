@@ -6,6 +6,11 @@
     "max_size" : 10,
     "ext" : ["jpg","png","gif"]
   },
+  "object_strage": {
+    "web_url": "http://XXXXXXXXX.com/i/", // Nginxサーバーを用意してURLを短縮する (ドメイン or IP)
+    "container": "nozomi", // WEB公開機能をONをしているコンテナを作成する
+    "use": true
+  },
   "azure" : {
     "subscription_key": "",
     "oxford_app" : {
