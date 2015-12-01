@@ -1,7 +1,7 @@
 {
     "swift" : {
         "auth_url" : "", //必須
-        "tenantName" : "", //必須
+        "tenantId" : "", //必須
         "username" : "", //必須
         "password" : "", //必須
         "endPoint" : "" //必須ではない、末尾に/はつけない
