@@ -28,7 +28,7 @@ http {
     #gzip  on;
 
     upstream unicornapp {
-	server unix:/tmp/unicorn.sock;
+	server unix:/var/unicorn.sock;
     }
 
     include /etc/nginx/conf.d/*.conf;
